@@ -48,13 +48,21 @@ export class MiembrosComponent implements OnInit {
     }
   }
 
-  eliminarMiembro(miembroId: number) {
-    this.gymService.deleteMiembro(miembroId).subscribe(() => {
-      this.getMiembros();
-    }, error => {
-      console.error('Error al eliminar miembro:', error);
-    });
+  eliminarMiembro(id: number): void {
+    this.gymService.deleteMiembro(id).subscribe(
+      (response) => {
+        console.log('Miembro eliminado:', response);
+        // Filtra la lista para eliminar el miembro eliminado
+        this.miembros = this.miembros.filter(m => m.miembro_id !== id); // Cambia 'miembro_id' si tiene otro nombre
+      },
+      (error) => {
+        console.error('Error al eliminar miembro:', error);
+      }
+    );
   }
+  
+  
+
 
   resetForm() {
     this.nuevoMiembro = { miembro_id: null, nombre: '', apellido: '', fecha_nacimiento: '', tipo_membresia: '' };

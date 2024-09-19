@@ -6,7 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { MiembrosComponent } from './components/miembros/miembros.component';
-import { EntrenadoresComponent } from './components/entrenadores/entrenadores.component';
+import { EntrenadoresComponent } from './components/entrenadores/entrenadores.component'; // Asegúrate de que esta ruta sea correcta
 import { SesionesComponent } from './components/sesiones/sesiones.component';
 
 // Definición de rutas
@@ -27,8 +27,8 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
-     FormsModule, // Importando FormsModule
-    RouterModule.forRoot(routes), // Configuración de rutas
+    FormsModule,
+    RouterModule.forRoot(routes),
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -19,6 +19,8 @@ export class EntrenadoresComponent implements OnInit {
   getEntrenadores() {
     this.gymService.getEntrenadores().subscribe(data => {
       this.entrenadores = data;
+    }, error => {
+      console.error('Error al obtener entrenadores:', error);
     });
   }
 
@@ -26,6 +28,8 @@ export class EntrenadoresComponent implements OnInit {
     this.gymService.addEntrenador(this.nuevoEntrenador).subscribe(() => {
       this.getEntrenadores();
       this.nuevoEntrenador = { nombre: '', especialidad: '', telefono: '', email: '' };
+    }, error => {
+      console.error('Error al agregar entrenador:', error);
     });
   }
 }

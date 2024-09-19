@@ -14,10 +14,18 @@ $pass = '';
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
     $data = json_decode(file_get_contents("php://input"));
-    $stmt = $pdo->prepare("UPDATE miembros SET nombre = ?, apellido = ?, fecha_nacimiento = ?, tipo_membresia = ? WHERE id = ?");
-    $stmt->execute([$data->nombre, $data->apellido, $data->fecha_nacimiento, $data->tipo_membresia, $data->id]);
+
+    if (!isset($data->miembro_id)) {
+        throw new Exception("ID de miembro no proporcionado");
+    }
+
+    $stmt = $pdo->prepare("UPDATE miembros SET nombre = ?, apellido = ?, fecha_nacimiento = ?, tipo_membresia = ? WHERE miembro_id = ?");
+    $stmt->execute([$data->nombre, $data->apellido, $data->fecha_nacimiento, $data->tipo_membresia, $data->miembro_id]);
+
     echo json_encode(["message" => "Miembro actualizado con éxito"]);
 } catch (PDOException $e) {
+    echo json_encode(["error" => $e->getMessage()]);
+} catch (Exception $e) {
     echo json_encode(["error" => $e->getMessage()]);
 }
 ?>

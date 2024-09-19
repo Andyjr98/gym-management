@@ -15,6 +15,7 @@ export class GymService {
   getMiembros(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}miembros/read/read.php`);
   }
+  
 
   addMiembro(miembro: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}miembros/create/create.php`, miembro);
@@ -23,20 +24,29 @@ export class GymService {
   updateMiembro(miembro: any): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}miembros/update/update.php`, miembro);
   }
+  
 
   deleteMiembro(miembroId: number): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}miembros/delete/delete.php?id=${miembroId}`);
-  }
+}
 
-  // Métodos para Entrenadores
-  getEntrenadores(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}entrenadores/read/read.php`);
-  }
-
-  addEntrenador(entrenador: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}entrenadores/create/create.php`, entrenador);
-  }
-
+    // Métodos para Entrenadores
+    getEntrenadores(): Observable<any[]> {
+      return this.http.get<any[]>(`${this.baseUrl}entrenadores/read/read.php`);
+    }
+  
+    addEntrenador(entrenador: any): Observable<any> {
+      return this.http.post<any>(`${this.baseUrl}entrenadores/create/create.php`, entrenador);
+    }
+  
+    updateEntrenador(entrenador: any): Observable<any> {
+      return this.http.put<any>(`${this.baseUrl}entrenadores/update/update.php`, entrenador);
+    }
+  
+    deleteEntrenador(entrenadorId: number): Observable<any> {
+      return this.http.delete<any>(`${this.baseUrl}entrenadores/delete/delete.php?id=${entrenadorId}`);
+    }
+  
   // Métodos para Sesiones
   getSesiones(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}sesiones/read/read.php`);
