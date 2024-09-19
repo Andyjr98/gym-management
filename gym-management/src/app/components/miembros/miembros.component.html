@@ -1,1 +1,14 @@
-<p>miembros works!</p>
+<h2>Miembros</h2>
+<form (ngSubmit)="addMiembro()">
+  <input [(ngModel)]="nuevoMiembro.nombre" name="nombre" placeholder="Nombre" required>
+  <input [(ngModel)]="nuevoMiembro.apellido" name="apellido" placeholder="Apellido" required>
+  <input [(ngModel)]="nuevoMiembro.fecha_nacimiento" type="date" name="fecha_nacimiento" required>
+  <input [(ngModel)]="nuevoMiembro.tipo_membresia" name="tipo_membresia" placeholder="Tipo de Membresía" required>
+  <button type="submit">Agregar Miembro</button>
+</form>
+
+<ul>
+  <li *ngFor="let miembro of miembros">
+    {{ miembro.nombre }} {{ miembro.apellido }} - {{ miembro.tipo_membresia }}
+  </li>
+</ul>

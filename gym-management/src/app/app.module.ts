@@ -9,12 +9,12 @@ import { MiembrosComponent } from './components/miembros/miembros.component';
 import { EntrenadoresComponent } from './components/entrenadores/entrenadores.component';
 import { SesionesComponent } from './components/sesiones/sesiones.component';
 
-// Define las rutas
+// Definición de rutas
 const routes: Routes = [
-    { path: 'miembros', component: MiembrosComponent },
-    { path: 'entrenadores', component: EntrenadoresComponent },
-    { path: 'sesiones', component: SesionesComponent },
-    { path: '', redirectTo: '/miembros', pathMatch: 'full' },
+  { path: 'miembros', component: MiembrosComponent },
+  { path: 'entrenadores', component: EntrenadoresComponent },
+  { path: 'sesiones', component: SesionesComponent },
+  { path: '', redirectTo: '/miembros', pathMatch: 'full' },
 ];
 
 @NgModule({
@@ -22,15 +22,15 @@ const routes: Routes = [
     AppComponent,
     MiembrosComponent,
     EntrenadoresComponent,
-    SesionesComponent
+    SesionesComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule,
-    RouterModule.forRoot(routes) // Asegúrate de que esta línea esté aquí
+     FormsModule, // Importando FormsModule
+    RouterModule.forRoot(routes), // Configuración de rutas
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
