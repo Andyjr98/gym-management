@@ -8,7 +8,7 @@ import { GymService } from '../../services/gym.service';
 })
 export class SesionesComponent implements OnInit {
   sesiones: any[] = [];
-  nuevaSesion = { miembro_id: null, entrenador_id: null, fecha: '', duracion: null };
+  nuevaSesion = { id: null, idMiembro: '', idEntrenador: '', fecha: '', duracion: '' };
 
   constructor(private gymService: GymService) {}
 
@@ -19,13 +19,38 @@ export class SesionesComponent implements OnInit {
   getSesiones() {
     this.gymService.getSesiones().subscribe(data => {
       this.sesiones = data;
+    }, error => {
+      console.error('Error al obtener sesiones:', error);
     });
   }
 
   addSesion() {
     this.gymService.addSesion(this.nuevaSesion).subscribe(() => {
       this.getSesiones();
-      this.nuevaSesion = { miembro_id: null, entrenador_id: null, fecha: '', duracion: null };
+      this.nuevaSesion = { id: null, idMiembro: '', idEntrenador: '', fecha: '', duracion: '' };
+    }, error => {
+      console.error('Error al agregar sesión:', error);
+    });
+  }
+
+  cargarSesion(sesion: any) {
+    this.nuevaSesion = { ...sesion };
+  }
+
+  actualizarSesion() {
+    this.gymService.updateSesion(this.nuevaSesion).subscribe(() => {
+      this.getSesiones();
+      this.nuevaSesion = { id: null, idMiembro: '', idEntrenador: '', fecha: '', duracion: '' };
+    }, error => {
+      console.error('Error al actualizar sesión:', error);
+    });
+  }
+
+  eliminarSesion(sesionId: number) {
+    this.gymService.deleteSesion(sesionId).subscribe(() => {
+      this.getSesiones();
+    }, error => {
+      console.error('Error al eliminar sesión:', error);
     });
   }
 }

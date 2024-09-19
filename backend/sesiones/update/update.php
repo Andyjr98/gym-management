@@ -1,36 +1,36 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+include_once __DIR__ . '/../../config/db.php';
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: PUT");
-header("Access-Control-Allow-Headers: Content-Type");
+$data = json_decode(file_get_contents("php://input"));
 
-include_once '../../config/db.php';
+if (isset($data->id) && isset($data->idMiembro) && isset($data->idEntrenador) && isset($data->fecha) && isset($data->duracion)) {
+    $id = $data->id;
+    $idMiembro = $data->idMiembro;
+    $idEntrenador = $data->idEntrenador;
+    $fecha = $data->fecha;
+    $duracion = $data->duracion;
 
-$data = json_decode(file_get_contents("php://input"), true);
+    $query = "UPDATE sesiones SET idMiembro = ?, idEntrenador = ?, fecha = ?, duracion = ? WHERE id = ?";
 
-// Verifica si $data es null
-if ($data === null) {
-    http_response_code(400); // Bad Request
-    echo json_encode(["error" => "Error al decodificar JSON."]);
-    exit;
+    if ($stmt = $conn->prepare($query)) {
+        $stmt->bind_param("iisii", $idMiembro, $idEntrenador, $fecha, $duracion, $id);
+        
+        if ($stmt->execute()) {
+            echo json_encode(["message" => "Sesión actualizada."]);
+        } else {
+            http_response_code(500);
+            echo json_encode(["message" => "Error al actualizar la sesión."]);
+        }
+        
+        $stmt->close();
+    } else {
+        http_response_code(500);
+        echo json_encode(["message" => "Error en la consulta."]);
+    }
+} else {
+    http_response_code(400);
+    echo json_encode(["message" => "Entrada inválida."]);
 }
 
-// Verifica que se proporcionen todos los campos necesarios
-if (!isset($data['miembro_id'], $data['entrenador_id'], $data['fecha'], $data['duracion'], $data['sesion_id'])) {
-    http_response_code(400); // Bad Request
-    echo json_encode(["error" => "Datos incompletos."]);
-    exit;
-}
-
-try {
-    $stmt = $pdo->prepare("UPDATE sesiones SET miembro_id = ?, entrenador_id = ?, fecha = ?, duracion = ? WHERE sesion_id = ?");
-    $stmt->execute([$data['miembro_id'], $data['entrenador_id'], $data['fecha'], $data['duracion'], $data['sesion_id']]);
-    
-    echo json_encode(["success" => "Sesión actualizada con éxito."]);
-} catch (Exception $e) {
-    http_response_code(500);
-    echo json_encode(["error" => "Error al actualizar: " . $e->getMessage()]);
-}
+$conn->close();
 ?>

@@ -1,14 +1,19 @@
-<h2>Miembros</h2>
+<h1>Gestión de Miembros</h1>
+
 <form (ngSubmit)="addMiembro()">
-  <input [(ngModel)]="nuevoMiembro.nombre" name="nombre" placeholder="Nombre" required>
-  <input [(ngModel)]="nuevoMiembro.apellido" name="apellido" placeholder="Apellido" required>
-  <input [(ngModel)]="nuevoMiembro.fecha_nacimiento" type="date" name="fecha_nacimiento" required>
-  <input [(ngModel)]="nuevoMiembro.tipo_membresia" name="tipo_membresia" placeholder="Tipo de Membresía" required>
+  <input type="text" [(ngModel)]="nuevoMiembro.nombre" name="nombre" placeholder="Nombre" required>
+  <input type="text" [(ngModel)]="nuevoMiembro.apellido" name="apellido" placeholder="Apellido" required>
+  <input type="date" [(ngModel)]="nuevoMiembro.fecha_nacimiento" name="fecha_nacimiento" required>
+  <input type="text" [(ngModel)]="nuevoMiembro.tipo_membresia" name="tipo_membresia" placeholder="Tipo de Membresía" required>
   <button type="submit">Agregar Miembro</button>
+  <button type="button" (click)="actualizarMiembro()">Actualizar Miembro</button>
 </form>
 
+<h2>Lista de Miembros</h2>
 <ul>
   <li *ngFor="let miembro of miembros">
-    {{ miembro.nombre }} {{ miembro.apellido }} - {{ miembro.tipo_membresia }}
+    {{ miembro.nombre }} {{ miembro.apellido }} - {{ miembro.fecha_nacimiento }} - {{ miembro.tipo_membresia }}
+    <button (click)="cargarMiembro(miembro)">Modificar</button>
+    <button (click)="eliminarMiembro(miembro.miembro_id)">Eliminar</button>
   </li>
 </ul>

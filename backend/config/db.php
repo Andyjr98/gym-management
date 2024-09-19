@@ -1,13 +1,14 @@
 <?php
-$host = 'localhost';
-$db = 'gym_management';
-$user = 'root';
-$pass = '';
+$servername = "localhost";
+$username = "root"; // Cambia por tu usuario
+$password = ""; // Cambia por tu contraseña
+$dbname = "gym_management"; // Cambia por tu base de datos
 
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
+// Crear conexión
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Comprobar conexión
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
 }
 ?>

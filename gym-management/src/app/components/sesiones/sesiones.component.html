@@ -1,14 +1,18 @@
-<h2>Sesiones</h2>
-<form (ngSubmit)="addSesion()">
-  <input [(ngModel)]="nuevaSesion.miembro_id" name="miembro_id" placeholder="ID Miembro" required>
-  <input [(ngModel)]="nuevaSesion.entrenador_id" name="entrenador_id" placeholder="ID Entrenador" required>
-  <input [(ngModel)]="nuevaSesion.fecha" type="date" name="fecha" required>
-  <input [(ngModel)]="nuevaSesion.duracion" name="duracion" placeholder="Duración (min)" required>
-  <button type="submit">Agregar Sesión</button>
+<h1>Gestión de Sesiones</h1>
+
+<form (ngSubmit)="nuevaSesion.id ? actualizarSesion() : addSesion()">
+  <input type="text" [(ngModel)]="nuevaSesion.idMiembro" name="idMiembro" placeholder="ID Miembro" required>
+  <input type="text" [(ngModel)]="nuevaSesion.idEntrenador" name="idEntrenador" placeholder="ID Entrenador" required>
+  <input type="date" [(ngModel)]="nuevaSesion.fecha" name="fecha" placeholder="Fecha" required>
+  <input type="number" [(ngModel)]="nuevaSesion.duracion" name="duracion" placeholder="Duración (min)" required>
+  <button type="submit">{{ nuevaSesion.id ? 'Actualizar' : 'Agregar' }} Sesión</button>
 </form>
 
+<h2>Lista de Sesiones</h2>
 <ul>
   <li *ngFor="let sesion of sesiones">
-    Sesión con Miembro ID {{ sesion.miembro_id }} y Entrenador ID {{ sesion.entrenador_id }} el {{ sesion.fecha }}
+    ID Miembro: {{ sesion.idMiembro }} - ID Entrenador: {{ sesion.idEntrenador }} - Fecha: {{ sesion.fecha }} - Duración: {{ sesion.duracion }} min
+    <button (click)="cargarSesion(sesion)">Modificar</button>
+    <button (click)="eliminarSesion(sesion.id)">Eliminar</button>
   </li>
 </ul>

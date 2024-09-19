@@ -3,19 +3,24 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
+header("Content-Type: application/json");
 
-include_once '../../config/db.php';
+$host = 'localhost';
+$db = 'gym_management';
+$user = 'root';
+$pass = '';
 
 try {
-    $query = "SELECT * FROM entrenadores";
-    $stmt = $pdo->query($query);
-    
+    $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $stmt = $pdo->prepare("SELECT * FROM entrenadores");
+    $stmt->execute();
+
     $entrenadores = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($entrenadores);
-} catch (Exception $e) {
-    http_response_code(500);
-    echo json_encode(["error" => "Error en la consulta: " . $e->getMessage()]);
+
+} catch (PDOException $e) {
+    echo json_encode(["status" => "error", "message" => $e->getMessage()]);
 }
 ?>
