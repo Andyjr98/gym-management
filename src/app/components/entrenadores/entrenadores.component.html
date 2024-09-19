@@ -1,0 +1,14 @@
+<h2>Entrenadores</h2>
+<form (ngSubmit)="addEntrenador()">
+  <input [(ngModel)]="nuevoEntrenador.nombre" name="nombre" placeholder="Nombre" required>
+  <input [(ngModel)]="nuevoEntrenador.especialidad" name="especialidad" placeholder="Especialidad" required>
+  <input [(ngModel)]="nuevoEntrenador.telefono" name="telefono" placeholder="Teléfono" required>
+  <input [(ngModel)]="nuevoEntrenador.email" name="email" placeholder="Email" required>
+  <button type="submit">Agregar Entrenador</button>
+</form>
+
+<ul>
+  <li *ngFor="let entrenador of entrenadores">
+    {{ entrenador.nombre }} - {{ entrenador.especialidad }}
+  </li>
+</ul>
